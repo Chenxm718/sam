@@ -10,7 +10,7 @@ import org.junit.Test;
 public class TestRetry {
 
     @Test
-    public void sendData(int a,int b){
+    public void sendData(){
         RetryUtils.retry(10,0);
     }
 }
