@@ -2,6 +2,10 @@ package com.sam.test;
 
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -42,5 +46,14 @@ public class TestSubList {
     public void testSplit(){
         String s = "1";
         System.out.println(Arrays.asList(s.split(",")));
+    }
+
+    @Test
+    public void testDate(){
+        LocalDateTime startDate = LocalDateTime.of(LocalDate.now().minusDays(30), LocalTime.MIN);
+        System.out.println(startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        System.out.println(startDate.toLocalDate());
+        System.out.println(startDate.toLocalDate().isBefore(LocalDate.parse("2017-09-02")));
+        System.out.println("test"+"_"+ startDate.format(DateTimeFormatter.ofPattern("yyyyMM")));
     }
 }
