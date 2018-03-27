@@ -20,4 +20,9 @@ public class TestLambda {
        List<String> list = FunctionDemo.testFunction(map, nc->FunctionDemo.funDemo(nc));
         list.forEach(li-> System.out.println(li));
     }
+
+    public void test1(){
+        int t = 10 ;
+//        FunctionDemo.function1(1,fun->FunctionDemo.function1(fun));
+    }
 }

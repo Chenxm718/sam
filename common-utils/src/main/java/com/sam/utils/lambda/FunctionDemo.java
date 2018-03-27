@@ -13,7 +13,7 @@ public class FunctionDemo {
         System.out.println("print arg....");
         Set<T> set = args.keySet();
         List<T> list = new ArrayList(set);
-        String[] arg = (String[])list.toArray(new String[list.size()]);
+        String[] arg = list.toArray(new String[list.size()]);
         return fun.apply(arg);
     }
 
@@ -24,6 +24,11 @@ public class FunctionDemo {
             returnList.add(l+"test");
         });
         return returnList;
+    }
+
+    public static int function1(int one ,Function<Integer,Integer> fun){
+        int count = one*10;
+        return fun.apply(count);
     }
 
 }
