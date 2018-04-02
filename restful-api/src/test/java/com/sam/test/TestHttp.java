@@ -1,9 +1,14 @@
 package com.sam.test;
 
+import com.alibaba.fastjson.JSON;
+import com.sam.restful.bean.FaceRectangle;
+import com.sam.restful.bean.Faces;
+import com.sam.restful.bean.FotoBean;
 import com.sam.restful.utils.HttpUtils;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestHttp {
@@ -20,11 +25,21 @@ public class TestHttp {
         Map params = new HashMap();
         params.put("api_key",api_key);
         params.put("api_secret",api_secret);
+//        params.put("image_url","D:\\Myself\\temp.jpg");
         params.put("image_base64",image_base64);
         params.put("return_landmark",return_landmark);
         params.put("return_attributes",return_attributes);
         String dbDetail = HttpUtils.getHttpUitlsClient().sendHttpRequest(dbUrl,params,"POST");
-        System.out.println(dbDetail);
+        FotoBean fotoBean = JSON.parseObject(dbDetail, FotoBean.class);
+        if (null!=fotoBean){
+           List<Faces> facesList = fotoBean.getFaces();
+           if (!facesList.isEmpty()){
+               facesList.forEach(faces -> {
+                  FaceRectangle faceRectangle = faces.getFace_rectangle();
+                   System.out.println(faceRectangle.getHeight()+"==="+faceRectangle.getWidth());
+               });
+           }
+        }
     }
     @Test
     public void testSearch(){
@@ -61,6 +76,24 @@ public class TestHttp {
         params.put("api_secret",api_secret);
         params.put("outer_id","sam_test");
         params.put("face_tokens","b72de1fae3eccd2a17a8c6d8242fe55c");
+        String dbDetail = HttpUtils.getHttpUitlsClient().sendHttpRequest(dbUrl,params,"POST");
+        System.out.println(dbDetail);
+    }
+
+
+    @Test
+    public void testMerge(){
+        String dbUrl = "https://api-cn.faceplusplus.com/imagepp/v1/mergeface";
+        String template_rectangle = "141,75,199,199";
+        Map params = new HashMap();
+        params.put("api_key",api_key);
+        params.put("api_secret",api_secret);
+        params.put("template_url","D:\\Myself\\temp.jpg");
+        params.put("template_rectangle",template_rectangle);
+        params.put("image_base64",image_base64);
+        params.put("outer_id","sam_test");
+        params.put("template_rectangle",template_rectangle);
+
         String dbDetail = HttpUtils.getHttpUitlsClient().sendHttpRequest(dbUrl,params,"POST");
         System.out.println(dbDetail);
     }
