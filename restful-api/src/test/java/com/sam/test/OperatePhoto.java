@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Iterator;
 
 public class OperatePhoto {
@@ -139,11 +140,11 @@ public class OperatePhoto {
         this .y = y;
     }
     public static void main(String[] args) {
-        OperatePhoto operateImage = new OperatePhoto(75, 141, 199, 199);
-        File file = new File("D:\\Myself\\sam.jpg");
+        OperatePhoto operateImage = new OperatePhoto(241, 367, 178, 178);
+        File file = new File("D:\\Myself\\180403071619487349.jpg");
         System.out.println(file.getName());
         operateImage.srcFile = file;
-        operateImage.targetFile = "D:\\Myself\\sam1.jpg";
+        operateImage.targetFile = "D:\\Myself\\1804030716194873491.jpg";
         try {
             operateImage.cut();
         } catch (IOException e) {
