@@ -6,9 +6,11 @@ import com.sam.restful.bean.Faces;
 import com.sam.restful.bean.FotoBean;
 import com.sam.restful.utils.HttpUtils;
 import com.sam.restful.utils.Img2Base64Util;
+import mtime.lark.util.lang.FaultException;
 import org.junit.Test;
 
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,17 +25,20 @@ public class TestHttp {
     public void testDetect(){
         String dbUrl = "https://api-cn.faceplusplus.com/facepp/v3/detect";
         int return_landmark = 2;
-        String return_attributes = "gender,eyestatus,eyegaze,facequality,blur";
+        String return_attributes = "gender,age,eyestatus,ethnicity,eyegaze,facequality,blur";
         Map params = new HashMap();
         params.put("api_key",api_key);
         params.put("api_secret",api_secret);
 //        params.put("image_base64",Img2Base64Util.getImgStr(new File("D:\\Myself\\180403071618570623.jpg")));
 //        params.put("image_base64",Img2Base64Util.getImgStr(new File("D:\\Myself\\180403071618710377.jpg")));
 //        params.put("image_base64",Img2Base64Util.getImgStr(new File("D:\\Myself\\180403071619285986.jpg")));
-        params.put("image_base64",Img2Base64Util.getImgStr(new File("D:\\Myself\\180403071619487349.jpg")));
+//        params.put("image_base64",Img2Base64Util.getImgStr(new File("D:\\Myself\\180403071619487349.jpg")));
 //        params.put("image_base64",
 //                Img2Base64Util.getImgStr(new File("D:\\Myself\\sam.jpg")));
 //        params.put("image_base64",image_base64);
+        params.put("image_base64",
+                Img2Base64Util.byte2Base64(Img2Base64Util.file2byte("D:\\Myself\\sam.jpg")));
+
         params.put("return_landmark",return_landmark);
 //        params.put("image_base64",Img2Base64Util.getImgStr(new File("D:\\Myself\\sam.jpg")));
         params.put("return_attributes",return_attributes);
@@ -50,6 +55,9 @@ public class TestHttp {
 //        }
         System.out.println(dbDetail);
     }
+
+
+
     @Test
     public void testSearch(){
         String dbUrl = "https://api-cn.faceplusplus.com/facepp/v3/search";
@@ -110,5 +118,31 @@ public class TestHttp {
     @Test
     public void testB64(){
         System.out.println(Img2Base64Util.getImgStr(new File("D:\\Myself\\sam.jpg")));
+    }
+
+    @Test
+    public void testByte2Base64(){
+        System.out.println(Img2Base64Util.byte2Base64(Img2Base64Util.file2byte("D:\\Myself\\sam.jpg")));
+    }
+
+    @Test
+    public void testRemove(){
+        FaceRectangle f1 = new FaceRectangle();
+        f1.setTop(1);
+        FaceRectangle f2 = new FaceRectangle();
+        f1.setTop(2);
+        FaceRectangle f3 = new FaceRectangle();
+        f1.setTop(3);
+        List<FaceRectangle> r = new ArrayList<>();
+        r.add(f1);
+        r.add(f2);
+        r.add(f3);
+
+        r.forEach(f -> {
+            if (2 != f.getTop()){
+                r.remove(f);
+            }
+        });
+        System.out.println(r.size());
     }
 }

@@ -1,10 +1,7 @@
 package com.sam.test;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import mtime.lark.util.lang.FaultException;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -122,7 +119,7 @@ public class FaceTest {
         try {
             FileInputStream stream = new FileInputStream(f);
             ByteArrayOutputStream out = new ByteArrayOutputStream(1000);
-            byte[] b = new byte[1000];
+            byte[] b = new byte[8096];
             int n;
             while ((n = stream.read(b)) != -1)
                 out.write(b, 0, n);
@@ -133,4 +130,94 @@ public class FaceTest {
         }
         return null;
     }
+
+    public static byte[] File2byte(String filePath) throws IOException {
+        byte[] buffer = null;
+        try {
+            File file = new File(filePath);
+            ByteArrayOutputStream bos;
+            try (FileInputStream fis = new FileInputStream(file)) {
+                bos = new ByteArrayOutputStream();
+                byte[] b = new byte[8096];
+                int n;
+                while ((n = fis.read(b)) != -1) {
+                    bos.write(b, 0, n);
+                }
+                fis.close();
+            }
+            bos.close();
+            buffer = bos.toByteArray();
+        } catch (FileNotFoundException e) {
+            throw new FaultException("file not found");
+        } catch (IOException e) {
+            throw new FaultException("IO Exception");
+        }
+        return buffer;
+    }
+
+    public static void byte2File(byte[] buf, String filePath, String fileName) {
+        BufferedOutputStream bos = null;
+        FileOutputStream fos = null;
+        File file = null;
+        try {
+            File dir = new File(filePath);
+            if (!dir.exists() && dir.isDirectory()) {
+                dir.mkdirs();
+            }
+            file = new File(filePath + File.separator + fileName);
+            fos = new FileOutputStream(file);
+            bos = new BufferedOutputStream(fos);
+            bos.write(buf);
+        } catch (Exception e) {
+            throw  new FaultException(e);
+        } finally {
+            if (bos != null) {
+                try {
+                    bos.close();
+                } catch (IOException e) {
+                    throw new FaultException(e);
+                }
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    throw new FaultException(e);
+                }
+            }
+        }
+    }
+
+
+    public static final byte[] input2byte(InputStream inStream)
+            throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte[] buff = new byte[8096];
+        int rc = 0;
+        while ((rc = inStream.read(buff, 0, 100)) > 0) {
+            outputStream.write(buff, 0, rc);
+        }
+        byte[] in2b = outputStream.toByteArray();
+        return in2b;
+    }
+
+
+    public static final InputStream byte2Input(byte[] buf) {
+        return new ByteArrayInputStream(buf);
+    }
+
+
+
+//    public static void main(String[] args) {
+//        int category = 5;
+//        try{
+//            String a = FileCategory .valueOf(category).displayName();
+//            System.out.println(a);
+//        }catch (IllegalArgumentException ex){
+//
+//        }
+//
+//    }
+
+
 }

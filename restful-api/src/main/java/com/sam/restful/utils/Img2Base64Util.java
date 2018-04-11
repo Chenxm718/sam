@@ -2,6 +2,7 @@ package com.sam.restful.utils;
 
 import java.io.*;
 
+import mtime.lark.util.lang.FaultException;
 import org.springframework.util.Base64Utils;
 
 /**
@@ -60,6 +61,34 @@ public class Img2Base64Util {
         }
     }
 
+    public static byte[] file2byte(String filePath) {
+        byte[] buffer = null;
+        try {
+            File file = new File(filePath);
+            ByteArrayOutputStream bos;
+            try (FileInputStream fis = new FileInputStream(file)) {
+                bos = new ByteArrayOutputStream();
+                byte[] b = new byte[8096];
+                int n;
+                while ((n = fis.read(b)) != -1) {
+                    bos.write(b, 0, n);
+                }
+                fis.close();
+            }
+            bos.close();
+            buffer = bos.toByteArray();
+        } catch (FileNotFoundException e) {
+            throw new FaultException("file not found");
+        } catch (IOException e) {
+            throw new FaultException("IO Exception");
+        }
+        return buffer;
+    }
+
+    public static final InputStream byte2Input(byte[] buf) {
+        return new ByteArrayInputStream(buf);
+    }
+
     public static void main(String[] args) {
         File imgFile = new File("D:\\Myself\\sam.jpg") ;//待处理的图片
         String imgbese=getImgStr(imgFile);
@@ -67,5 +96,10 @@ public class Img2Base64Util {
         System.out.println(imgbese);
 //        String imgFilePath = "d:\\332.jpg";//新生成的图片
 //        generateImage(imgbese,imgFilePath);
+    }
+
+
+    public static String byte2Base64(byte[] bytes) {
+        return new String(Base64Utils.encodeToString(bytes));
     }
 }
