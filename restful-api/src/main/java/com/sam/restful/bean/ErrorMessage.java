@@ -3,12 +3,10 @@ package com.sam.restful.bean;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Setter
 @Getter
-public class FotoBean {
-    private String image_id;
+public class ErrorMessage {
+    private String time_used;
+    private String error_message;
     private String request_id;
-    private List<Faces> faces;
 }

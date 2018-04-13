@@ -8,4 +8,6 @@ import lombok.Setter;
 public class Faces {
     private String face_token;
     private FaceRectangle face_rectangle;
+    private Attributes attributes;
+
 }
