@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.sam.restful.bean.FaceRectangle;
 import com.sam.restful.bean.Faces;
 import com.sam.restful.bean.PhotoBean;
+import com.sam.restful.utils.FileTxtUtils;
 import com.sam.restful.utils.HttpUtils;
 import com.sam.restful.utils.Img2Base64Util;
 import org.junit.Test;
@@ -37,7 +38,7 @@ public class TestHttp {
 //                Img2Base64Util.getImgStr(new File("D:\\Myself\\sam.jpg")));
 //        params.put("image_base64",image_base64);
         params.put("image_base64",
-                Img2Base64Util.byte2Base64(Img2Base64Util.file2byte("D:\\Myself\\180410201644888470.jpg")));
+                Img2Base64Util.byte2Base64(Img2Base64Util.file2byte("D:\\Myself\\180416113324909106.jpg")));
 //        params.put("image_base64",b);
         params.put("return_landmark",return_landmark);
 //        params.put("image_base64",Img2Base64Util.getImgStr(new File("D:\\Myself\\sam.jpg")));
@@ -161,5 +162,99 @@ public class TestHttp {
             System.out.printf("");
         });
 
+    }
+
+
+    @Test
+    public void testDetectData(){
+
+        String dbUrl = "https://api-cn.faceplusplus.com/facepp/v3/detect";
+        int return_landmark = 2;
+        String return_attributes = "gender,age,eyestatus,eyegaze,ethnicity,smiling,facequality,blur,beauty";
+        File file = new File("D:\\Myself\\other");
+//        File file = new File("D:\\Myself\\e");
+        if (file.isDirectory()){
+            File[] f =  file.listFiles();
+            for (int i = 0;i<f.length;i++){
+                Map params = new HashMap();
+                params.put("api_key",api_key);
+                params.put("api_secret",api_secret);
+
+                params.put("image_base64",
+                        Img2Base64Util.byte2Base64(Img2Base64Util.file2byte(f[i].getPath())));
+                params.put("return_landmark",return_landmark);
+                params.put("return_attributes",return_attributes);
+                String dbDetail = HttpUtils.getHttpUitlsClient().sendHttpRequest(dbUrl,params,"POST");
+                String rpath = f[i].getParent();
+                String fileName = f[i].getName();
+                String txtPath = fileName.replace("jpg","txt");
+//                System.out.println(rpath+fileName);
+//                System.out.println(dbDetail);
+                try {
+                    PhotoBean fotoBean = JSON.parseObject(dbDetail, PhotoBean.class);
+                    if (null!=fotoBean){
+                        List<Faces> facesList = fotoBean.getFaces();
+                        wf(facesList,txtPath);
+                    }
+                }catch (Exception e){
+                    System.out.println(rpath+fileName);
+                }
+
+            }
+
+        }
+
+
+    }
+
+    private void wf(List<Faces> facesList,String txtPath) {
+        if (!facesList.isEmpty()){
+
+            facesList.forEach(faces -> {
+                String wpath="";
+                FaceRectangle faceRectangle = faces.getFace_rectangle();
+                if (facesList.size()>1){
+                    wpath = "D:\\Myself\\2";
+                }else{
+                    if ("Female".equals(faces.getAttributes().getGender().getValue())){
+                        wpath = "D:\\Myself\\nv";
+                    }else if("Male".equals(faces.getAttributes().getGender().getValue())){
+                        wpath = "D:\\Myself\\nan";
+                    }else{
+                        wpath = "D:\\Myself\\other";
+                    }
+                }
+                String file = wpath+"\\"+txtPath;
+                FileTxtUtils.creatTxtFile(file);
+                System.out.println(file+"============");
+//                    System.out.println("年龄..."+faces.getAttributes().getAge().getValue());
+                FileTxtUtils.writeTxtFile("年龄..."+faces.getAttributes().getAge().getValue(),file);
+//                    System.out.println("性别..."+faces.getAttributes().getGender().getValue());
+                FileTxtUtils.writeTxtFile("性别..."+faces.getAttributes().getGender().getValue(),file);
+//                    System.out.println("人种..."+faces.getAttributes().getEthnicity().getValue());
+                FileTxtUtils.writeTxtFile("人种..."+faces.getAttributes().getEthnicity().getValue(),file);
+//                    System.out.println("x坐标"+faceRectangle.getLeft()+"y坐标"+faceRectangle.getTop()+" 宽"+faceRectangle.getWidth()+"高"+faceRectangle.getHeight());
+                FileTxtUtils.writeTxtFile("x坐标"+faceRectangle.getLeft()+"y坐标"+faceRectangle.getTop()+" 宽"+faceRectangle.getWidth()+"高"+faceRectangle.getHeight(),file);
+//                    System.out.println("精确度..."+faces.getAttributes().getFacequality().getValue());
+                FileTxtUtils.writeTxtFile("精确度..."+faces.getAttributes().getFacequality().getValue(),file);
+            });
+
+        }else {
+            String wpath = "D:\\Myself\\other\\"+txtPath;
+            System.out.println(wpath+"============");
+
+        }
+    }
+
+    @Test
+    public void testFile(){
+        File file = new File("D:\\Myself\\1");
+        if (file.isDirectory()){
+            File[] f =  file.listFiles();
+            for (int i = 0;i<f.length;i++){
+                System.out.println(f[i].getPath());
+                System.out.println(f[i].getPath().replace("jpg","txt"));
+            }
+        }
     }
 }
