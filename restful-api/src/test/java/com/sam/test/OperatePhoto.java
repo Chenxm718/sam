@@ -134,16 +134,18 @@ public class OperatePhoto {
 
 
     public static void main(String[] args) {
-        OperatePhoto operateImage = new OperatePhoto(5, 418, 65, 65);
-        File file = new File("D:\\Myself\\180403071619487349.jpg");
+        OperatePhoto operateImage = new OperatePhoto(344, 223, 133, 133);
+        File file = new File("D:\\Myself\\18041216451299266.jpg");
         System.out.println(file.getName());
         operateImage.srcFile = file;
-        operateImage.targetFile = "D:\\Myself\\1804030716194873491.jpg";
+        operateImage.targetFile = "D:\\Myself\\180412164512992661.jpg";
         try {
             operateImage.cut();
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        String s = "D:\\Myself\\18041216451299266.jpg";
+//        System.out.println(s.endsWith("jepg"));
 
     }
 }
