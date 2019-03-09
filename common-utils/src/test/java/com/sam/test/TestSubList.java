@@ -120,4 +120,15 @@ public class TestSubList {
             return b;
         }
     }
+
+    @Test
+    public void testShard(){
+//        Integer i = 8;
+//        System.out.println(i%8);
+//        System.out.println(i.hashCode()%8);
+        String voucherId = "1903060000011170701200000202";
+        int hashValue = voucherId.hashCode();
+        int shardCount = 32;
+        System.out.println(Math.abs(hashValue % shardCount)+1);
+    }
 }
