@@ -26,9 +26,11 @@ public class FunctionDemo {
         return returnList;
     }
 
-    public static int function1(int one ,Function<Integer,Integer> fun){
-        int count = one*10;
-        return fun.apply(count);
+    public static Integer functionTest(List<String> argList,Function<List<String>,Integer> fun){
+        if (argList!=null){
+            argList.sort(Comparator.comparing(Integer::valueOf));
+        }
+        return fun.apply(argList);
     }
 
 }
