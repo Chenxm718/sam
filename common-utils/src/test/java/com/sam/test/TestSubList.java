@@ -59,10 +59,14 @@ public class TestSubList {
 
     @Test
     public void test2(){
-        int x =1;
-        int y=2;
-        int z=3;
-        System.out.println(y+=z--/++x);
+        LocalDateTime  buyTime = LocalDateTime.now();
+        LocalDateTime startTime = buyTime.plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime endTime = startTime.plusDays(1).withHour(23).withMinute(59).withSecond(59).withNano(0).minusDays(1l);
+        LocalDateTime ss = startTime.plusDays(1 + 1l).plusSeconds(-1L);
+        System.out.println(buyTime);
+        System.out.println(startTime);
+        System.out.println(endTime);
+        System.out.println(ss);
     }
 
     @Test
@@ -108,9 +112,14 @@ public class TestSubList {
 
     @Test
     public void test4(){
-        int a= 100;
-        int b = 45;
-        System.out.println(max(a,b));
+//        List<String> longs = new ArrayList<>();
+//        longs.add("123");
+//        longs.add("456");
+//        String sss = JSON.toJSONString(longs);
+//        List<String> s = JSON.parseArray(sss,String.class);
+//        s.forEach(sr->{
+//            System.out.println(Long.valueOf(sr));
+//        });
     }
 
     public static double max(double a,double b){
@@ -126,9 +135,11 @@ public class TestSubList {
 //        Integer i = 8;
 //        System.out.println(i%8);
 //        System.out.println(i.hashCode()%8);
-        String voucherId = "1903060000011170701200000202";
-        int hashValue = voucherId.hashCode();
-        int shardCount = 32;
-        System.out.println(Math.abs(hashValue % shardCount)+1);
+//        String voucherId = "1904160000011170700300000001";
+//        int hashValue = voucherId.hashCode();
+//        int shardCount = 32;
+//        System.out.println(Math.abs(hashValue % shardCount)+1);
+        String s = null;
+        System.out.println(s==null);
     }
 }
