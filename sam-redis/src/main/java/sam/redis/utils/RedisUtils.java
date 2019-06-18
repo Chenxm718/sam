@@ -49,10 +49,16 @@ public class RedisUtils {
         JedisSentinelPool pool = getJedisSentinelPool();
         Jedis jedis =  pool.getResource();
         Long result = jedis.setnx(key,value);
-        //1成功，0已存在
-        System.out.println(result);
-        jedis.close();
-        pool.close();
+//        //1成功，0已存在
+//        System.out.println(result);
+//        jedis.close();
+//        pool.close();
+    }
+
+    public static void set(String key,String value){
+        JedisSentinelPool pool = getJedisSentinelPool();
+        Jedis jedis =  pool.getResource();
+        jedis.set(key,value);
     }
     public static Long incr(String key){
         JedisSentinelPool pool = getJedisSentinelPool();
@@ -60,8 +66,8 @@ public class RedisUtils {
         Long result = jedis.incr(key);
         //1成功，0已存在
 //        System.out.println(result);
-        jedis.close();
-        pool.close();
+//        jedis.close();
+//        pool.close();
         return result;
     }
 

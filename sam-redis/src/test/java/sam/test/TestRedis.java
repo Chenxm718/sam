@@ -26,10 +26,20 @@ public class TestRedis {
     }
     @Test
     public void testIncr(){
-        RedisUtils.incr("test_1_3310");
-        System.out.println(RedisUtils.get("test_1_3310"));
-        RedisUtils.incrBy("test_1_3310",-1);
-        System.out.println(RedisUtils.get("test_1_3310"));
+//        RedisUtils.incr("test_1_3310");
+//        System.out.println(RedisUtils.get("test_1_3310"));
+//        RedisUtils.incrBy("test_1_3310",-1);
+//        System.out.println(RedisUtils.get("test_1_3310"));
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+//        RedisUtils.set("20190611","50");
+//        System.out.println(RedisUtils.get("20190611"));
+        RedisUtils.incr("20190612");
+        System.out.println(RedisUtils.get("20190612"));
+        RedisUtils.incrBy("20190612",list.size());
+        System.out.println(RedisUtils.get("20190612"));
     }
 
     @Test
@@ -40,7 +50,9 @@ public class TestRedis {
 //        System.out.println(startTime+" _ "+today+" _ "+startTime.toLocalDate().isAfter(today));
 //        System.out.println(endTime+" _ "+today+" _ "+endTime.toLocalDate().isBefore(today));
 //        System.out.println(101/3);
-        System.out.println(Math.abs((1+"89").hashCode())%32 +1);
+        System.out.println(Math.abs(("1906120000011170700300000009").hashCode())%32 +1);
+        System.out.println(Math.abs((1+"144").hashCode())%32 +1);
+        System.out.println(Math.abs(("E849000000000368903").hashCode()%32) +1);
 //        Arrays.asList("123".split(",")).forEach(ss->{
 //            System.out.println(ss);
 //        });
@@ -137,7 +149,22 @@ public class TestRedis {
 //            System.out.println(map.get(key));
 //        });
 //        System.out.println(map.keySet().size());
-        int i = 12;
-        System.out.println(-i);
+//        int i = 12;
+//        System.out.println(-i);
+
     }
+
+    @Test
+    public void testMap(){
+//        Map<String,Integer> map = new HashMap<>();
+//        System.out.println(map.get("t")+1);
+//        if (map.get("t")==null){
+//            map.put("t",1);
+//            map.put("t",map.get("t")+1);
+//        }
+//        System.out.println(map.get("t"));
+        System.out.println(String.format("%s为空","test"));
+    }
+
+
 }

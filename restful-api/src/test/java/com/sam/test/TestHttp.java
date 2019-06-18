@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class TestHttp {
@@ -270,5 +271,22 @@ public class TestHttp {
 //        System.out.println(endDateTime);
         String s = "d//0";
         System.out.println(s.substring(0,s.lastIndexOf("//")));
+    }
+
+    @Test
+    public void testJson(){
+        FinishedData finishedData  = new FinishedData();
+        finishedData.setCreateTime(LocalDateTime.now());
+        finishedData.setFinishedDate(LocalDate.now());
+        finishedData.setId(123);
+        finishedData.setMemberNo("123123");
+        finishedData.setRuleId(123);
+        List<FinishedData> dataList = new ArrayList<>();
+        dataList.add(finishedData);
+        String d = JSON.toJSONString(dataList);
+        List<FinishedData> list = JSON.parseArray(d,FinishedData.class);
+        list.forEach(finishedData1 -> {
+            System.out.println(finishedData1.getRuleId());
+        });
     }
 }
