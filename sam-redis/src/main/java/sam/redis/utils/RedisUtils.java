@@ -37,18 +37,20 @@ public class RedisUtils {
 //       pool.close();
        return value;
     }
-    public static void add(String key,String value){
+    public static String add(String key,String value){
         JedisSentinelPool pool = getJedisSentinelPool();
         Jedis jedis =  pool.getResource();
-        jedis.set(key,value,"NX","PX",60);
-        jedis.close();
-        pool.close();
+        String value1 = jedis.set(key,value,"NX","EX",60);
+//        jedis.close();
+//        pool.close();
+        return value1;
     }
 
-    public static void setNx(String key,String value){
+    public static Long setNx(String key,String value){
         JedisSentinelPool pool = getJedisSentinelPool();
         Jedis jedis =  pool.getResource();
         Long result = jedis.setnx(key,value);
+        return result;
 //        //1成功，0已存在
 //        System.out.println(result);
 //        jedis.close();

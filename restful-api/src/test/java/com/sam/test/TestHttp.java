@@ -289,4 +289,74 @@ public class TestHttp {
             System.out.println(finishedData1.getRuleId());
         });
     }
+
+
+    @Test
+    public void testSort(){
+        FinishedData finishedData  = new FinishedData();
+        finishedData.setCreateTime(LocalDateTime.now());
+        finishedData.setFinishedDate(LocalDate.now());
+        finishedData.setId(123);
+        finishedData.setMemberNo("123123");
+        finishedData.setRuleId(123);
+        finishedData.setDataId(1233);
+        FinishedData finishedData1  = new FinishedData();
+        finishedData1.setCreateTime(LocalDateTime.now().minusDays(1));
+        finishedData1.setFinishedDate(LocalDate.now().minusDays(1));
+        finishedData1.setId(1234);
+        finishedData1.setMemberNo("1231234");
+        finishedData1.setRuleId(1234);
+        finishedData1.setDataId(1234);
+        List<FinishedData> dataList = new ArrayList<>();
+        dataList.add(finishedData);
+        dataList.add(finishedData1);
+
+//        Collections.sort(dataList, Comparator.comparing(FinishedData::getFinishedDate));
+        Collections.sort(dataList,(d1,d2)-> d2.getFinishedDate().compareTo(d1.getFinishedDate()));
+//        Collections.sort(dataList,(d1,d2)-> d2.getDataId()-d1.getDataId());
+        dataList.forEach(data->{
+            System.out.println(data.getDataId());
+        });
+    }
+
+    @Test
+    public void testList(){
+        FinishedData finishedData  = new FinishedData();
+        finishedData.setCreateTime(LocalDateTime.now());
+        finishedData.setFinishedDate(LocalDate.now());
+        finishedData.setId(123);
+        finishedData.setMemberNo("123123");
+        finishedData.setRuleId(123);
+        finishedData.setDataId(1233);
+        List<String> list1 = new ArrayList<>();
+        list1.add("1");
+        finishedData.setList(list1);
+        FinishedData finishedData1  = new FinishedData();
+        finishedData1.setCreateTime(LocalDateTime.now().minusDays(1));
+        finishedData1.setFinishedDate(LocalDate.now().minusDays(1));
+        finishedData1.setId(1234);
+        finishedData1.setMemberNo("1231234");
+        finishedData1.setRuleId(1234);
+        finishedData1.setDataId(1234);
+        List<String> list2 = new ArrayList<>();
+        list2.add("2");
+        finishedData.setList(list2);
+        List<FinishedData> dataList = new ArrayList<>();
+        dataList.add(finishedData);
+        dataList.add(finishedData1);
+
+//        Collections.sort(dataList, Comparator.comparing(FinishedData::getFinishedDate));
+//        Collections.sort(dataList,(d1,d2)-> d2.getFinishedDate().compareTo(d1.getFinishedDate()));
+        Collections.sort(dataList, Comparator.comparingInt(FinishedData::getDataId));
+//        dataList.forEach(data->{
+//            List<String> list3 = new ArrayList<>();
+//            list3.add("3");
+//            data.setList(list3);
+//            System.out.println(data.getDataId());
+//        });
+
+        dataList.forEach(d->{
+            System.out.println(d.getDataId());
+        });
+    }
 }

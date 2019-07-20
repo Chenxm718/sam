@@ -1,5 +1,6 @@
 package sam.test;
 
+import com.sun.deploy.util.StringUtils;
 import org.junit.Test;
 import sam.redis.utils.RedisUtils;
 
@@ -20,9 +21,21 @@ public class TestRedis {
     }
     @Test
     public void testRedisNx(){
-        RedisUtils.setNx("test_1_339","0");
-        System.out.println(RedisUtils.get("test_1_339"));
-        System.out.println(RedisUtils.incr("test_1_339"));
+        String result = RedisUtils.add("test_1_3393","5");
+        System.out.println(result+"===="+LocalDateTime.now());
+        String result2 = RedisUtils.add("test_1_3393","6");
+        if (result2 == null ){
+            try{
+                System.out.println("wait start:"+LocalDateTime.now());
+                Thread.sleep(1000l);
+                System.out.println("wait finished:"+LocalDateTime.now());
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                System.out.println("wait error:"+LocalDateTime.now());
+            }
+
+        }
+        System.out.println(result2+"===="+LocalDateTime.now());
     }
     @Test
     public void testIncr(){
@@ -30,16 +43,17 @@ public class TestRedis {
 //        System.out.println(RedisUtils.get("test_1_3310"));
 //        RedisUtils.incrBy("test_1_3310",-1);
 //        System.out.println(RedisUtils.get("test_1_3310"));
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("2");
-        list.add("3");
+//        List<String> list = new ArrayList<>();
+//        list.add("1");
+//        list.add("2");
+//        list.add("3");
 //        RedisUtils.set("20190611","50");
 //        System.out.println(RedisUtils.get("20190611"));
-        RedisUtils.incr("20190612");
-        System.out.println(RedisUtils.get("20190612"));
-        RedisUtils.incrBy("20190612",list.size());
-        System.out.println(RedisUtils.get("20190612"));
+        System.out.println(RedisUtils.get("162_2_serialKey"));
+//        System.out.println(RedisUtils.incr("cmc_voucher_common_getvoucher_2_160"));
+//        System.out.println(RedisUtils.get("cmc_voucher_common_getvoucher_2_160"));
+//        RedisUtils.incrBy("20190612",list.size());
+//        System.out.println(RedisUtils.get("20190612"));
     }
 
     @Test
