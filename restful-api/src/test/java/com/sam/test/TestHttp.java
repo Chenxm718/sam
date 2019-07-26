@@ -359,4 +359,40 @@ public class TestHttp {
             System.out.println(d.getDataId());
         });
     }
+
+    @Test
+    public void testMap(){
+        FinishedData finishedData  = new FinishedData();
+        finishedData.setCreateTime(LocalDateTime.now());
+        finishedData.setFinishedDate(LocalDate.now());
+        finishedData.setId(123);
+        finishedData.setMemberNo("123123");
+        finishedData.setRuleId(123);
+        finishedData.setDataId(1233);
+        FinishedData finishedData1  = new FinishedData();
+        finishedData1.setCreateTime(LocalDateTime.now().minusDays(1));
+        finishedData1.setFinishedDate(LocalDate.now().minusDays(1));
+        finishedData1.setId(1234);
+        finishedData1.setMemberNo("1231234");
+        finishedData1.setRuleId(1234);
+        finishedData1.setDataId(1234);
+        List<FinishedData> dataList = new ArrayList<>();
+        dataList.add(finishedData);
+        dataList.add(finishedData1);
+        Map<Integer,List<FinishedData>> dataMap = new HashMap<>();
+        dataMap.put(1,dataList);
+
+        if (dataMap.get(1)!=null){
+            FinishedData finishedData3  = new FinishedData();
+            finishedData3.setCreateTime(LocalDateTime.now());
+            finishedData3.setFinishedDate(LocalDate.now());
+            finishedData3.setId(123);
+            finishedData3.setMemberNo("123123");
+            finishedData3.setRuleId(123);
+            finishedData3.setDataId(1233);
+            dataMap.get(1).add(finishedData3);
+        }
+        System.out.println(dataMap.get(1).size());
+    }
+
 }

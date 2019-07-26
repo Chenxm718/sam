@@ -3,6 +3,8 @@ package sam.test;
 import org.junit.Test;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @Author:ChenXinmin
@@ -12,25 +14,35 @@ public class TestShard {
 
     @Test
     public void testShard(){
-        System.out.println(Math.abs((2+"12").hashCode())%32 +1);
-        System.out.println(Math.abs((2+"13").hashCode())%32 +1);
-        System.out.println(Math.abs((2+"14").hashCode())%32 +1);
-        System.out.println(Math.abs((2+"15").hashCode())%32 +1);
-        System.out.println(Math.abs((2+"16").hashCode())%32 +1);
-        System.out.println(Math.abs((2+"21").hashCode())%32 +1);
-        System.out.println(Math.abs((2+"22").hashCode())%32 +1);
+//        System.out.println(Math.abs((2+"12").hashCode())%32 +1);
+//        System.out.println(Math.abs((2+"13").hashCode())%32 +1);
+//        System.out.println(Math.abs((2+"14").hashCode())%32 +1);
+//        System.out.println(Math.abs((2+"15").hashCode())%32 +1);
+//        System.out.println(Math.abs((2+"16").hashCode())%32 +1);
+//        System.out.println(Math.abs((2+"21").hashCode())%32 +1);
+//        System.out.println(Math.abs((2+"22").hashCode())%32 +1);
 
-        System.out.println(Math.abs((1+"12").hashCode())%32 +1);
+        System.out.println(Math.abs((1+"189").hashCode())%32 +1);
         System.out.println(Math.abs((2+"15").hashCode())%32 +1);
+        System.out.println(Math.abs((3+"139-1").hashCode())%32 +1);
+
         System.out.println(Math.abs(("19071700000111707004").hashCode())%32 +1);
-        System.out.println(Math.abs("223".hashCode()%16) +1);
+        System.out.println(Math.abs("027".hashCode()%16) +1);
         System.out.println(String.format("%02d",Math.abs((3+"9091111111").hashCode())%32 +1));
+
 
     }
 
     @Test
     public void testSql(){
-        readAndWriteTxt();
+//        readAndWriteTxt();
+//        String str = "001807022018|051101392018";
+//        String[] strings = str.split("\\|");
+//        System.out.println(strings.length);
+//        System.out.println(str.split("\\|")[0]);
+
+        Integer dateInt = Integer.valueOf(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
+        System.out.println(dateInt-8);
     }
 
     private String shared(String memberNo){
