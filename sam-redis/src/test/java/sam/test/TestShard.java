@@ -3,8 +3,11 @@ package sam.test;
 import org.junit.Test;
 
 import java.io.*;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author:ChenXinmin
@@ -22,12 +25,16 @@ public class TestShard {
 //        System.out.println(Math.abs((2+"21").hashCode())%32 +1);
 //        System.out.println(Math.abs((2+"22").hashCode())%32 +1);
 
-        System.out.println(Math.abs((1+"189").hashCode())%32 +1);
-        System.out.println(Math.abs((2+"15").hashCode())%32 +1);
-        System.out.println(Math.abs((3+"139-1").hashCode())%32 +1);
+        System.out.println(Math.abs((1+"6").hashCode())%32 +1);
+        System.out.println(Math.abs((3+"93-voucher").hashCode())%32 +1);
+        System.out.println(Math.abs((3+"80-voucher").hashCode())%32 +1);
+        System.out.println(Math.abs((3+"89-voucher").hashCode())%32 +1);
+        System.out.println(Math.abs((3+"87-voucher").hashCode())%32 +1);
+        System.out.println(Math.abs((3+"84-voucher").hashCode())%32 +1);
+        System.out.println(Math.abs((7+"TM201909190005-4").hashCode())%32 +1);
 
-        System.out.println(Math.abs(("19071700000111707004").hashCode())%32 +1);
-        System.out.println(Math.abs("027".hashCode()%16) +1);
+        System.out.println(Math.abs(("19091700000000001010").hashCode())%32 +1);
+        System.out.println(Math.abs("500".hashCode()%16) +1);
         System.out.println(String.format("%02d",Math.abs((3+"9091111111").hashCode())%32 +1));
 
 
@@ -41,8 +48,9 @@ public class TestShard {
 //        System.out.println(strings.length);
 //        System.out.println(str.split("\\|")[0]);
 
-        Integer dateInt = Integer.valueOf(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
-        System.out.println(dateInt-8);
+//        Integer dateInt = Integer.valueOf(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
+//        System.out.println(dateInt-8);
+        System.out.println(String.format("init_file_nsq_biz_%s_%s", 1, 2));
     }
 
     private String shared(String memberNo){
@@ -95,4 +103,99 @@ public class TestShard {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testPage(){
+//
+        int minGroup = 1;
+        int pageSize = 2;
+        int countPage = (minGroup%pageSize)>0?(minGroup/pageSize)+1:(minGroup/pageSize);
+        System.out.println(countPage);
+        for(int i=0;i<countPage;i++){
+            System.out.println("index:"+(i-1+1)*pageSize + "------"+"pageSize"+pageSize);
+        }
+    }
+
+
+    @Test
+    public void testSub(){
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        list.add("4");
+        list.add("5");
+        list.add("6");
+        List<String> newList = list.stream().map(item->{return item;}).collect(Collectors.toList());
+        newList.forEach(ss-> System.out.println(ss));
+//        int num = 2;
+//        for(int j=1;j<4;j++){
+//            for(int k=0;k<1;k++){
+//                System.out.println(list.subList((j-1)*num,((j-1)*num)+num));
+//            }
+//        }
+//        int PAGE_SIZE = 300;
+//        int totalNumber = 50000;
+//        int countPage = (totalNumber%PAGE_SIZE)>0?(totalNumber/PAGE_SIZE)+1:(totalNumber/PAGE_SIZE);
+//        System.out.println(countPage);
+//        System.out.println((PAGE_SIZE*(countPage-1)));
+//        System.out.println(totalNumber-(PAGE_SIZE*(countPage-1)));
+
+
+
+    }
+
+    @Test
+    public void testMapSort(){
+        Map<String,String> map = new HashMap<>();
+        map.put("cinemaGovCode","1234556");
+        map.put("showCode","C189083098908908");
+        map.put("seatRow","1");
+        map.put("seatColumn","2");
+        map.put("sellOrderId","12324");
+        map.put("signType","md5");
+        map.put("ticketCode","543543541");
+        map.put("movieShowStartTime","223321");
+
+        Ksort(map);
+        System.out.println(singSort(map));
+    }
+    public static void Ksort(Map<String, String> map) {
+        String sb = "";
+        String[] key = new String[map.size()];
+        int index = 0;
+        for (String k : map.keySet()) {
+            key[index] = k;
+            index++;
+        }
+        Arrays.sort(key);
+        for (String s : key) {
+            sb += s + "=" + map.get(s) + "&";
+        }
+        sb = sb.substring(0, sb.length() - 1);
+// 将得到的字符串进行处理得到目标格式的字符串
+//        try {
+//            sb = URLEncoder.encode(sb, "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }// 使用常见的UTF-8编码
+//        sb = sb.replace("%3D", "=").replace("%26", "&");
+        System.out.println(sb);
+    }
+
+    public static String singSort(Map<String, String> map) {
+        StringBuilder sb = new StringBuilder();
+        String[] key = new String[map.size()];
+        int index = 0;
+        for (String k : map.keySet()) {
+            key[index] = k;
+            index++;
+        }
+        Arrays.sort(key);
+        for (String s : key) {
+            sb.append(s).append("=").append( map.get(s)).append("&");
+        }
+        return sb.toString().substring(0, sb.length() - 1);
+    }
+
 }
