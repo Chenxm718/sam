@@ -442,4 +442,37 @@ public class DateUtils {
         int day = (number - (number / 10000 * 10000)) - month * 100;
         return year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
     }
+
+    /**
+     * 结束时间比开始时间多多少毫秒
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public static long betweenMillis(LocalDateTime startTime,LocalDateTime endTime){
+        Duration duration = Duration.between(startTime,endTime);
+        return duration.toMillis();
+    }
+
+    /**
+     * 秒时间戳转时间
+     * @param timestamp
+     * @return
+     */
+    public static LocalDateTime timestampSecondToLocalDateTime(long timestamp){
+        Instant instant = Instant.ofEpochSecond(timestamp);
+        ZoneId zone = ZoneId.systemDefault();
+        return LocalDateTime.ofInstant(instant, zone);
+    }
+    /**
+     * 毫秒时间戳转时间
+     * @param timestamp
+     * @return
+     */
+    public static LocalDateTime timestampMilliToLocalDateTime(long timestamp){
+        Instant instant = Instant.ofEpochMilli(timestamp);
+        ZoneId zone = ZoneId.systemDefault();
+        return LocalDateTime.ofInstant(instant, zone);
+    }
+
 }

@@ -10,7 +10,11 @@ const (
 	const3 = false
 )
 func main()  {
-	callTest()
+	testAddress()
+}
+func testAddress()  {
+	var a = 10
+	fmt.Println(&a)
 }
 func callTest()  {
 	//单行注释

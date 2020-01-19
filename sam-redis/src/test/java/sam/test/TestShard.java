@@ -4,7 +4,8 @@ import org.junit.Test;
 
 import java.io.*;
 import java.net.URLEncoder;
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -15,27 +16,73 @@ import java.util.stream.Collectors;
  */
 public class TestShard {
 
+    /**
+     * 计算要分发的次数
+     *
+     * @param totalNum
+     * @param oneNum
+     * @return
+     */
+    private int getTotalCount(int totalNum, int oneNum) {
+        int count = totalNum % oneNum == 0 ? totalNum / oneNum : totalNum / oneNum + 1;
+        if (oneNum >= totalNum) {
+            count = 1;
+        }
+        return count;
+    }
+    @Test
+    public void testInit(){
+//        LocalDateTime startTime = LocalDateTime.now();
+//        LocalDateTime endTime = startTime.plusSeconds(1l);
+//        Duration duration = Duration.between(startTime,endTime);
+//        System.out.println(duration.toMillis());
+        long time = 1578560524l;
+//        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String sd = sdf.format(new Date(time));
+        Instant instant = Instant.ofEpochSecond(time);
+        ZoneId zone = ZoneId.systemDefault();
+        LocalDateTime ss = LocalDateTime.ofInstant(instant, zone);
+        System.out.println(ss);
+//        //生码总数量
+//        int totalNum = 50000;
+//        //单次分发数量
+//        int oneNum = 10000;
+//        //需要分多少次进行处理
+//        int totalCount = getTotalCount(totalNum, oneNum);
+//        for (int i = 0; i < totalCount; i++) {
+//            int start = (i * oneNum + 1);
+//            int end = (oneNum * (i + 1));
+//            end = end >= totalNum ? totalNum : end;
+//            System.out.println("start:"+start+"end:"+end+"=="+(i+1)+"===count=="+totalCount);
+//        }
+    }
     @Test
     public void testShard(){
-//        System.out.println(Math.abs((2+"12").hashCode())%32 +1);
-//        System.out.println(Math.abs((2+"13").hashCode())%32 +1);
-//        System.out.println(Math.abs((2+"14").hashCode())%32 +1);
-//        System.out.println(Math.abs((2+"15").hashCode())%32 +1);
-//        System.out.println(Math.abs((2+"16").hashCode())%32 +1);
-//        System.out.println(Math.abs((2+"21").hashCode())%32 +1);
-//        System.out.println(Math.abs((2+"22").hashCode())%32 +1);
+        String newString = String.format("%010d", 50000);
 
-        System.out.println(Math.abs((1+"6").hashCode())%32 +1);
-        System.out.println(Math.abs((3+"93-voucher").hashCode())%32 +1);
-        System.out.println(Math.abs((3+"80-voucher").hashCode())%32 +1);
-        System.out.println(Math.abs((3+"89-voucher").hashCode())%32 +1);
-        System.out.println(Math.abs((3+"87-voucher").hashCode())%32 +1);
-        System.out.println(Math.abs((3+"84-voucher").hashCode())%32 +1);
-        System.out.println(Math.abs((7+"TM201909190005-4").hashCode())%32 +1);
-
-        System.out.println(Math.abs(("19091700000000001010").hashCode())%32 +1);
-        System.out.println(Math.abs("500".hashCode()%16) +1);
-        System.out.println(String.format("%02d",Math.abs((3+"9091111111").hashCode())%32 +1));
+        System.out.println(newString);
+//        LocalDateTime dateTime = LocalDate.now().atStartOfDay().minusHours(24);
+//        LocalDateTime dateTime1 = dateTime.minusHours(24L);
+//        LocalDateTime dateTime2 = dateTime1.plusHours(1l);
+//        System.out.println(dateTime);
+//        System.out.println(dateTime1);
+//        System.out.println(dateTime2);
+//        System.out.println(LocalDate.now().minusDays(516l));
+////        System.out.println(Math.abs("135".hashCode()%16)+1 );
+        System.out.println(Math.abs(("190514122010100007118").hashCode())%32 +1);
+        System.out.println(Math.abs((1+"39").hashCode())%32 +1);
+        System.out.println(Math.abs((7+"TM201910100002-13").hashCode())%32 +1);
+        System.out.println(Math.abs((2+"8").hashCode())%32 +1);
+        System.out.println(Math.abs((2+"8").hashCode())%32 +1);
+        System.out.println(Math.abs((2+"8").hashCode())%32 +1);
+        System.out.println(Math.abs((2+"8").hashCode())%32 +1);
+        System.out.println(Math.abs((2+"8").hashCode())%32 +1);
+        System.out.println(Math.abs(("AAjzZmaQz46q9ux//yjTow==").hashCode())%32 +1);
+////
+//        System.out.println(Math.abs((1+"36").hashCode())%32 +1);
+//        System.out.println(Math.abs((3+"203-1").hashCode())%32 +1);
+////        System.out.println(Math.abs((3+"126-3").hashCode())%32 +1);
+//        System.out.println(Math.abs((7+"TM201910310001-3").hashCode())%32 +1);
 
 
     }
@@ -51,6 +98,9 @@ public class TestShard {
 //        Integer dateInt = Integer.valueOf(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
 //        System.out.println(dateInt-8);
         System.out.println(String.format("init_file_nsq_biz_%s_%s", 1, 2));
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("=sfsda").append("sadfaf").append(",");
+        System.out.println(stringBuilder.toString().substring(0,stringBuilder.toString().length()-1));
     }
 
     private String shared(String memberNo){
@@ -108,7 +158,7 @@ public class TestShard {
     public void testPage(){
 //
         int minGroup = 1;
-        int pageSize = 2;
+        int pageSize = 300;
         int countPage = (minGroup%pageSize)>0?(minGroup/pageSize)+1:(minGroup/pageSize);
         System.out.println(countPage);
         for(int i=0;i<countPage;i++){
@@ -120,26 +170,45 @@ public class TestShard {
     @Test
     public void testSub(){
         List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("2");
-        list.add("3");
-        list.add("4");
-        list.add("5");
-        list.add("6");
-        List<String> newList = list.stream().map(item->{return item;}).collect(Collectors.toList());
-        newList.forEach(ss-> System.out.println(ss));
-//        int num = 2;
-//        for(int j=1;j<4;j++){
-//            for(int k=0;k<1;k++){
-//                System.out.println(list.subList((j-1)*num,((j-1)*num)+num));
-//            }
-//        }
-//        int PAGE_SIZE = 300;
-//        int totalNumber = 50000;
+        for (int i = 0;i<22;i++){
+            list.add((i+1)+"");
+        }
+        System.out.println(list.get(list.size()-1));
+        int pageIndex = 3;
+        int pageSize = 10;
+        int start = (pageIndex-1)*pageSize;
+        int end = pageIndex*pageSize;
+        System.out.println("=============="+end);
+        if (end>list.size()){
+            end = list.size();
+        }
+        System.out.println(start+"  "+ end);
+        List<String> list1 = list.subList(start,end);
+        System.out.println(list1.get(0));
+        System.out.println(list1.size());
+        System.out.println(list1.get(list1.size()-1));
+//        Map<String,List<String>> map = new HashMap<>();
+//        map.put("321",list);
+////        List<String> newList = list.stream().map(item->{return item;}).collect(Collectors.toList());
+////        newList.forEach(ss-> System.out.println(ss));
+//////        int num = 2;
+////        for(int j=1;j<4;j++){
+////            for(int k=0;k<1;k++){
+////                System.out.println(list.subList((j-1)*num,((j-1)*num)+num));
+////            }
+////        }
+//        int PAGE_SIZE = 5;
+//        int totalNumber = 19986;
 //        int countPage = (totalNumber%PAGE_SIZE)>0?(totalNumber/PAGE_SIZE)+1:(totalNumber/PAGE_SIZE);
 //        System.out.println(countPage);
 //        System.out.println((PAGE_SIZE*(countPage-1)));
 //        System.out.println(totalNumber-(PAGE_SIZE*(countPage-1)));
+//        for(int j=1;j<=list.size();j++){
+//            for(int k=0;k<1;k++){
+//                map.get("321").subList((j-1)*1,(j-1)*1+1);
+//            }
+//        }
+
 
 
 
@@ -198,4 +267,26 @@ public class TestShard {
         return sb.toString().substring(0, sb.length() - 1);
     }
 
+
+    @Test
+    public void testSale(){
+//        String[] str = {"19110400000000001000","19103000000000001002","19110400000000001001","19110400000000001002","19110126192000001000","19110401304000001000","19101701304000001000","19103135071000001000","19110166040000001004","19110466040000001000","19110466040000001001","19110259263000001000","19110427092000001000","19103027092000001000","19110133099000001003","19110403353000001000","19110430327000001000","19110430327000001002","19102503353000001002","19102503353000001001","19101103353000001001","19101103353000001000","19110427091000001000","19110101002000001002","19110101002000001000","19110101002000001001","19110406324000001001","19110413032000001000","19110413032000001001","19110426320000001002","19110575887000001000","19110403809000001000","19110103809000001002","19110510381000001000","19110410381000001001","19103104903000001005","19110575250000001000","19110575250000001001","19110575250000001002","19110503325000001000","19110234884000001000","19110404880000001000","19103004880000001001","19103004880000001000","19110204880000001000","19103131376000001003","19110104871000001001","19110527223000001000","19110404871000001002","19110527223000001001","19110175509000001000","19110407307000001001","19110243935000001000","19110401311000001000","19110473097000001002","19103138406000001000","19110438406000001001","19110503314000001000","19110426927000001000","19100904155000001002","19101404155000001000","19110444894000001002","19110506076000001000","19110425301000001007","19110425301000001002","19110373896000001000","19101607967000001001","19102207967000001006","19110401020000001000","19110101020000001001","19110573029000001000","19110119109000001003","19110405038000001001","19110119109000001004","19110219109000001000","19110519109000001003","19110451308000001000","19102805038000001000","19110525301000001003","19110104902000001018","19110104902000001019","19101203314000001000","19091803314000001000","19101403314000001003","19110504010000001001","19101814224000001000","19091614224000001000","19110444246000001000","19110413985000001001","19110403325000001001","19110403325000001003","19102503325000001000","19102503325000001001","19102925972000001000","19110159265000001000","19110159265000001001","19110575887000001001","19110412342000001001","19110430282000001000","19110525383000001004", "19110403946000001001","19110512066000001000","19110515005000001000","19110404085000001002","19110403946000001000","19110438968000001000","19102327347000001001","19110131812000001000","19102113165000001000","19103028838000001000","19110529819000001000","19110114344000001013","19110314344000001000","19110526921000001001","19110427920000001000","19102227920000001000","19110427093000001000","19102419953000001000","19110415005000001001","19110415005000001003","19110515005000001001","19110415005000001002","19110527512000001000","19110527512000001001","19100915366000001003","19103026191000001000","19110504902000001001","19110219368000001000","19110466426000001002","19110466426000001003","19110466426000001004","19110466426000001001","19110113985000001001","19110466426000001000","19110113985000001000","19110475868000001000","19110226921000001000","19110343254000001000","19110438065000001001","19103106324000001005","19103004085000001001","19103004085000001002","19110119393000001001","19110104903000001003","19110104903000001002","19110519953000001000","19110333355000001000","19110343242000001000","19110527512000001002","19110527512000001003","19110527512000001004","19110528838000001001","19110528838000001000","19110413135000001000","19110514403000001001","19110514403000001000","19110407924000001001","19110407924000001002","19110413165000001000","19110426320000001000","19110503241000001000","19110527153000001000","19101603314000001000","19110535120000001000","19110475019000001001","19110438203000001000","19102612398000001001","19110444084000001000","19110544084000001000","19110515042000001000","19110526232000001000","19110538968000001000","19110538968000001001","19110427222000001000","19110527222000001001","19110535941000001000","19110503309000001000","19102803353000001001","19110515818000001000","19110512423000001000","19110533080000001000","19110533080000001001","19103008164000001001","19110543323000001000","19110433969000001003","19110533969000001002","19110544975000001001","19110504010000001004","19110504010000001003","19110504010000001002","19110413825000001000","19110594193000001000","19110411132000001000","19110505169000001000","19110506324000001001","19110535072000001000","19110435072000001004","19110435072000001005","19102803867000001001","19110503867000001001",	 "19110503867000001000","19110403867000001000","19110226870000001000","19100826870000001002","19100826870000001001","19110426870000001002","19110543057000001000","19110514344000001005"};
+//        for (int i=0;i<str.length;i++) {
+//            if ((Math.abs((str[i]).hashCode())%32 +1)==10 ||(Math.abs((str[i]).hashCode())%32 +1)==11 ){
+//                System.out.println(str[i]);
+//            }
+//        }
+        StringBuilder a = new StringBuilder();
+        a.append("111");
+        String b = "222";
+        for (int i=0;i<2;i++){
+//
+            b = "0"+b;
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("0");
+            a = stringBuilder.append(a);
+            System.out.println(a.toString());
+            System.out.println(b);
+        }
+    }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public class FinishedData {
 
     private int dataId;
-    private long id;
+    private Long id;
     /**
      * 会员编码
      */
@@ -32,11 +32,11 @@ public class FinishedData {
 
     private List<String> list;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

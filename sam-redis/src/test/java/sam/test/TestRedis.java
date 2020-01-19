@@ -180,5 +180,9 @@ public class TestRedis {
         System.out.println(String.format("%s为空","test"));
     }
 
-
+    @Test
+    public void testRedisKey(){
+        String key = "init_count_1615_679-1_3_serialKey";
+        System.out.println(RedisUtils.get(key));
+    }
 }

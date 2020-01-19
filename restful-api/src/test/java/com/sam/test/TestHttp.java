@@ -279,7 +279,7 @@ public class TestHttp {
         FinishedData finishedData  = new FinishedData();
         finishedData.setCreateTime(LocalDateTime.now());
         finishedData.setFinishedDate(LocalDate.now());
-        finishedData.setId(123);
+        finishedData.setId(123l);
         finishedData.setMemberNo("123123");
         finishedData.setRuleId(123);
         List<FinishedData> dataList = new ArrayList<>();
@@ -294,29 +294,34 @@ public class TestHttp {
 
     @Test
     public void testSort(){
+
         FinishedData finishedData  = new FinishedData();
         finishedData.setCreateTime(LocalDateTime.now());
         finishedData.setFinishedDate(LocalDate.now());
-        finishedData.setId(123);
-        finishedData.setMemberNo("123123");
+        finishedData.setId(123l);
+        finishedData.setMemberNo("Y");
         finishedData.setRuleId(123);
         finishedData.setDataId(1233);
         FinishedData finishedData1  = new FinishedData();
         finishedData1.setCreateTime(LocalDateTime.now().minusDays(1));
-        finishedData1.setFinishedDate(LocalDate.now().minusDays(1));
-        finishedData1.setId(1234);
-        finishedData1.setMemberNo("1231234");
+        finishedData1.setFinishedDate(LocalDate.now().plusDays(1));
+        finishedData1.setId(1234l);
+        finishedData1.setMemberNo("N");
         finishedData1.setRuleId(1234);
         finishedData1.setDataId(1234);
         List<FinishedData> dataList = new ArrayList<>();
         dataList.add(finishedData);
         dataList.add(finishedData1);
-
+//        dataList.sort((d1,d2)-> d1.getId().compareTo(d2.getId()));
+        dataList.sort(Comparator.comparing(FinishedData::getMemberNo));
 //        Collections.sort(dataList, Comparator.comparing(FinishedData::getFinishedDate));
-        Collections.sort(dataList,(d1,d2)-> d2.getFinishedDate().compareTo(d1.getFinishedDate()));
+//        Collections.sort(dataList,(d1,d2)-> d2.getFinishedDate().compareTo(d1.getFinishedDate()));
 //        Collections.sort(dataList,(d1,d2)-> d2.getDataId()-d1.getDataId());
+//        System.out.println(dataList.get(dataList.size()-1).getDataId());
         dataList.forEach(data->{
             System.out.println(data.getDataId());
+//            System.out.println(data.getFinishedDate());
+            System.out.println(data.getMemberNo());
         });
     }
 
@@ -325,7 +330,7 @@ public class TestHttp {
         FinishedData finishedData  = new FinishedData();
         finishedData.setCreateTime(LocalDateTime.now());
         finishedData.setFinishedDate(LocalDate.now());
-        finishedData.setId(123);
+        finishedData.setId(123l);
         finishedData.setMemberNo("123123");
         finishedData.setRuleId(123);
         finishedData.setDataId(1233);
@@ -335,7 +340,7 @@ public class TestHttp {
         FinishedData finishedData1  = new FinishedData();
         finishedData1.setCreateTime(LocalDateTime.now().minusDays(1));
         finishedData1.setFinishedDate(LocalDate.now().minusDays(1));
-        finishedData1.setId(1234);
+        finishedData1.setId(1234l);
         finishedData1.setMemberNo("1231234");
         finishedData1.setRuleId(1234);
         finishedData1.setDataId(1234);
@@ -345,10 +350,10 @@ public class TestHttp {
         List<FinishedData> dataList = new ArrayList<>();
         dataList.add(finishedData);
         dataList.add(finishedData1);
-
+        dataList.sort(Comparator.comparing(FinishedData::getDataId));
 //        Collections.sort(dataList, Comparator.comparing(FinishedData::getFinishedDate));
 //        Collections.sort(dataList,(d1,d2)-> d2.getFinishedDate().compareTo(d1.getFinishedDate()));
-        Collections.sort(dataList, Comparator.comparingInt(FinishedData::getDataId));
+//        Collections.sort(dataList, Comparator.comparingInt(FinishedData::getDataId));
 //        dataList.forEach(data->{
 //            List<String> list3 = new ArrayList<>();
 //            list3.add("3");
@@ -366,14 +371,14 @@ public class TestHttp {
         FinishedData finishedData  = new FinishedData();
         finishedData.setCreateTime(LocalDateTime.now());
         finishedData.setFinishedDate(LocalDate.now());
-        finishedData.setId(123);
+        finishedData.setId(123l);
         finishedData.setMemberNo("123123");
         finishedData.setRuleId(123);
         finishedData.setDataId(1233);
         FinishedData finishedData1  = new FinishedData();
         finishedData1.setCreateTime(LocalDateTime.now().minusDays(1));
         finishedData1.setFinishedDate(LocalDate.now().minusDays(1));
-        finishedData1.setId(1234);
+        finishedData1.setId(1234l);
         finishedData1.setMemberNo("1231234");
         finishedData1.setRuleId(1234);
         finishedData1.setDataId(1234);
@@ -387,7 +392,7 @@ public class TestHttp {
             FinishedData finishedData3  = new FinishedData();
             finishedData3.setCreateTime(LocalDateTime.now());
             finishedData3.setFinishedDate(LocalDate.now());
-            finishedData3.setId(123);
+            finishedData3.setId(123l);
             finishedData3.setMemberNo("123123");
             finishedData3.setRuleId(123);
             finishedData3.setDataId(1233);
@@ -408,6 +413,19 @@ public class TestHttp {
 
     }
 
+    @Test
+    public void testList1(){
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        list.add("4");
+        list.add("5");
+
+        List<String> list1 = list.subList(1,2);
+        list1.forEach(s-> System.out.println(s));
+
+    }
     /**
      * 字符串转unicode
      *
