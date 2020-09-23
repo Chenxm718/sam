@@ -58,31 +58,17 @@ public class TestShard {
     }
     @Test
     public void testShard(){
-        String newString = String.format("%010d", 50000);
-
-        System.out.println(newString);
-//        LocalDateTime dateTime = LocalDate.now().atStartOfDay().minusHours(24);
-//        LocalDateTime dateTime1 = dateTime.minusHours(24L);
-//        LocalDateTime dateTime2 = dateTime1.plusHours(1l);
-//        System.out.println(dateTime);
-//        System.out.println(dateTime1);
-//        System.out.println(dateTime2);
-//        System.out.println(LocalDate.now().minusDays(516l));
-////        System.out.println(Math.abs("135".hashCode()%16)+1 );
-        System.out.println(Math.abs(("190514122010100007118").hashCode())%32 +1);
-        System.out.println(Math.abs((1+"39").hashCode())%32 +1);
-        System.out.println(Math.abs((7+"TM201910100002-13").hashCode())%32 +1);
-        System.out.println(Math.abs((2+"8").hashCode())%32 +1);
-        System.out.println(Math.abs((2+"8").hashCode())%32 +1);
-        System.out.println(Math.abs((2+"8").hashCode())%32 +1);
-        System.out.println(Math.abs((2+"8").hashCode())%32 +1);
-        System.out.println(Math.abs((2+"8").hashCode())%32 +1);
-        System.out.println(Math.abs(("AAjzZmaQz46q9ux//yjTow==").hashCode())%32 +1);
-////
-//        System.out.println(Math.abs((1+"36").hashCode())%32 +1);
-//        System.out.println(Math.abs((3+"203-1").hashCode())%32 +1);
-////        System.out.println(Math.abs((3+"126-3").hashCode())%32 +1);
-//        System.out.println(Math.abs((7+"TM201910310001-3").hashCode())%32 +1);
+//        LocalDateTime tt = LocalDateTime.now().minusDays(1l);
+//        System.out.println(tt);
+//        System.out.println(tt.isBefore(LocalDateTime.now()));
+        System.out.println(Math.abs(("1719149186656669589").hashCode())%32 +1);
+        System.out.println(Math.abs(("9847724131857091987").hashCode())%32 +1);
+        System.out.println(Math.abs(new Long(1009527380).hashCode())%32 +1);
+        System.out.println(Math.abs(("15047250012").hashCode())%32 +1);
+        String ss = "2020-08-27 00:00:00.0";
+        System.out.println(ss.substring(0,19));
+        System.out.println(LocalDate.parse("2020-01-01"));
+        System.out.println(LocalDateTime.parse(ss.substring(0,19),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
 
     }
@@ -276,17 +262,24 @@ public class TestShard {
 //                System.out.println(str[i]);
 //            }
 //        }
-        StringBuilder a = new StringBuilder();
-        a.append("111");
-        String b = "222";
-        for (int i=0;i<2;i++){
-//
-            b = "0"+b;
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("0");
-            a = stringBuilder.append(a);
-            System.out.println(a.toString());
-            System.out.println(b);
-        }
+//        StringBuilder a = new StringBuilder();
+//        a.append("111");
+//        String b = "222";
+//        for (int i=0;i<2;i++){
+////
+//            b = "0"+b;
+//            StringBuilder stringBuilder = new StringBuilder();
+//            stringBuilder.append("0");
+//            a = stringBuilder.append(a);
+//            System.out.println(a.toString());
+//            System.out.println(b);
+//        }
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now.toString());
+
+        String str = "2020-07-08T02:30:01.0";
+        System.out.println(str.substring(0,19));
+        LocalDateTime dateTime = LocalDateTime.parse(str.substring(0,19));
+        System.out.println(dateTime);
     }
 }

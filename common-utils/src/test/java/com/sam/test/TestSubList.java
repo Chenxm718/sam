@@ -112,14 +112,10 @@ public class TestSubList {
 
     @Test
     public void test4(){
-//        List<String> longs = new ArrayList<>();
-//        longs.add("123");
-//        longs.add("456");
-//        String sss = JSON.toJSONString(longs);
-//        List<String> s = JSON.parseArray(sss,String.class);
-//        s.forEach(sr->{
-//            System.out.println(Long.valueOf(sr));
-//        });
+        String dt = "2020-05-01";
+        String string = dt.replaceAll("/","-");
+        LocalDate date = LocalDate.parse(string,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        System.out.println(date);
     }
 
     public static double max(double a,double b){
@@ -135,13 +131,39 @@ public class TestSubList {
 //        Integer i = 8;
 //        System.out.println(i%8);
 //        System.out.println(i.hashCode()%8);
-//        String voucherId = "1904160000011170700300000001";
-//        int hashValue = voucherId.hashCode();
-//        int shardCount = 32;
-//        System.out.println(Math.abs(hashValue % shardCount)+1);
+        String voucherId = "E359000000186915514";
+        int hashValue = voucherId.hashCode();
+        int shardCount = 32;
+        System.out.println(Math.abs(hashValue % shardCount)+1);
         String s = null;
         System.out.println(s==null);
     }
+    @Test
+    public void testSubTList(){
+        int pageSize = 5;
+        List<Integer> logicIdList = new ArrayList<>();
+        logicIdList.add(1);
+        logicIdList.add(2);
+        logicIdList.add(3);
+        logicIdList.add(4);
+        logicIdList.add(5);
+        logicIdList.add(6);
+        logicIdList.add(7);
+        logicIdList.add(8);
+        if (logicIdList.size()>=pageSize){
+            int length = logicIdList.size();
+            // 计算可以分成多少组
+            int num = (length + pageSize - 1) / pageSize;
+            for (int i = 0; i < num; i++) {
+                // 开始位置
+                int fromIndex = i * pageSize;
+                // 结束位置
+                int toIndex = (i + 1) * pageSize < length ? (i + 1) * pageSize : length;
 
+                System.out.println(logicIdList.subList(fromIndex, toIndex));
+            }
+
+        }
+    }
 
 }
