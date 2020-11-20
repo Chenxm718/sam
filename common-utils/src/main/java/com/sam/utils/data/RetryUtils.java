@@ -1,8 +1,9 @@
 package com.sam.utils.data;
 
 /**
- * Created by ChenXinmin on 2017/1/9.
- * 重试机制
+ * @author ChenXinmin
+ * @date 2017/1/9.
+ * 重试机制工具
  */
 public class RetryUtils {
     public static final int MAX_RETRY = 3;
