@@ -1,16 +1,14 @@
 package com.sam.test;
 
+import com.alibaba.fastjson.JSON;
 import com.sam.utils.lambda.ConsumerDemo;
 import com.sam.utils.lambda.FunctionDemo;
-import com.sam.utils.lambda.SupplierDemo;
 import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 /**
  * Created by ChenXinmin on 2017/2/7.
@@ -123,5 +121,16 @@ public class TestLambda {
             return 0;
         }
 
+    }
+
+    @Test
+    public void testJSONMap(){
+        Map<String,String> map = new HashMap<>();
+        map.put("123","hao");
+        map.put("456","no");
+        String jsonStr = JSON.toJSONString(map);
+
+        Map testMap = JSON.parseObject(jsonStr,Map.class);
+        System.out.println(testMap.get("123"));
     }
 }
