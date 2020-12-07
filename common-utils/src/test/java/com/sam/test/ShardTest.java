@@ -24,4 +24,12 @@ public class ShardTest {
         System.out.println(seat.split(",")[0]);
         System.out.println(seat.split(",")[1]);
     }
+
+    @Test
+    public void testCeil(){
+        double d = 25/20;
+        double dd = 101%10;
+        System.out.println(dd);
+        System.out.println(Math.ceil(d));
+    }
 }

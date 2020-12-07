@@ -1,6 +1,7 @@
 package com.sam.test;
 
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -164,6 +165,44 @@ public class TestSubList {
                 System.out.println(logicIdList.subList(fromIndex, toIndex));
             }
 
+        }
+    }
+    @Test
+    public void testSubAList(){
+        List<Integer> logicIdList = new ArrayList<>();
+        logicIdList.add(1);
+        logicIdList.add(2);
+        logicIdList.add(3);
+        logicIdList.add(4);
+        logicIdList.add(5);
+        logicIdList.add(6);
+        logicIdList.add(7);
+        logicIdList.add(8);
+        dealBySubList(logicIdList,3,"");
+    }
+
+
+    /**
+     * 通过list的     subList(int fromIndex, int toIndex)方法实现
+     * @param sourList 源list
+     * @param batchCount 分组条数
+     */
+    public void dealBySubList(List sourList, int batchCount,String topicName){
+        int sourListSize = sourList.size();
+        int subCount = sourListSize%batchCount==0 ? sourListSize/batchCount : sourListSize/batchCount+1;
+        System.out.println(subCount);
+        int startIndext = 0;
+        int stopIndext = 0;
+        for(int i=0;i<subCount;i++){
+            stopIndext = (i==subCount-1) ? sourListSize : stopIndext + batchCount;
+            System.out.println("i"+i+"==="+"startIndext=="+startIndext+"   stopIndext=="+stopIndext);
+            List tempList = new ArrayList(sourList.subList(startIndext, stopIndext));
+            System.out.println(tempList.size());
+            tempList.forEach(o -> {
+                System.out.println(o);
+            });
+            System.out.println("=================");
+            startIndext = stopIndext;
         }
     }
 
